@@ -12,8 +12,8 @@ class _WeatherAppState extends State<WeatherApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: SafeArea(
-          child: Text('Weather App'),
+        body: Column(
+          children: <Widget>[Container(child: Image.asset('images/dayTime.jpg'))],
         ),
       ),
     );
