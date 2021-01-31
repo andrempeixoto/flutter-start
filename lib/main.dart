@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(WeatherApp());
 
@@ -13,6 +14,9 @@ class _WeatherAppState extends State<WeatherApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Weather App'),
+        ),
         body: Column(
           children: <Widget>[
             Container(
@@ -68,4 +72,6 @@ class _WeatherAppState extends State<WeatherApp> {
       ),
     );
   }
+
+  // display images based on current time
 }
