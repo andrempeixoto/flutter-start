@@ -20,7 +20,7 @@ class _WeatherAppState extends State<WeatherApp> {
         body: Column(
           children: <Widget>[
             Container(
-              child: Image.asset('images/dayTime.jpg'),
+              child: displayImage(),
             ),
             // SizedBox(height: 30.0), // not using this element as Container margin is used below
             Container(
@@ -74,4 +74,16 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   // display images based on current time
+  displayImage() {
+    var now = DateTime.now();
+    final currentTime = DateFormat.jm().format(now);
+
+    if(currentTime.contains('AM')) {
+      return Image.asset('images/dayTime.jpg');
+    } else if(currentTime.contains('PM')) {
+      return Image.asset('images/nightTime.jpg');
+    }
+
+    }
+  }
 }
