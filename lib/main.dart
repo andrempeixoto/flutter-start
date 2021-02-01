@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'GetLocation.dart';
 
 void main() => runApp(WeatherApp());
 
@@ -11,20 +12,24 @@ class WeatherApp extends StatefulWidget {
 class _WeatherAppState extends State<WeatherApp> {
   @override
   Widget build(BuildContext context) {
+    getLocation();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Weather App'),
+          title: Text(
+            'Weather App',
+          ),
         ),
         body: Column(
           children: <Widget>[
             Container(
-              child: displayImage(),
+              child: displayImage(), //Image.asset('images/dayTime.jpg')
             ),
-            // SizedBox(height: 30.0), // not using this element as Container margin is used below
+            SizedBox(height: 30.0),
             Container(
-              margin: EdgeInsets.only(top: 30.0),
+              // margin: EdgeInsets.only(top: 30.0), // using SizedBox instead
               child: Text(
                 'You are in:',
                 style: TextStyle(
@@ -73,7 +78,7 @@ class _WeatherAppState extends State<WeatherApp> {
     );
   }
 
-  // display images based on current time
+  // Display images based on current time
   displayImage() {
     var now = DateTime.now();
     final currentTime = DateFormat.jm().format(now);
@@ -83,5 +88,10 @@ class _WeatherAppState extends State<WeatherApp> {
     } else if (currentTime.contains('PM')) {
       return Image.asset('images/nightTime.jpg');
     }
+  }
+
+  void getLocation() async {
+    GetLocation getlocation = GetLocation();
+    await getlocation.getCurrentLocation();
   }
 }
