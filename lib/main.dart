@@ -20,36 +20,38 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-    getLocation();
+    // getLocation();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Weather App',
-          ),
-        ),
+        // appBar: AppBar(
+        //   title: Text(
+        //     'Weather App',
+        //   ),
+        // ),
         body: Column(
           children: <Widget>[
             Container(
               child: displayImage(), //Image.asset('images/dayTime.jpg')
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 20.0),
             Container(
               // margin: EdgeInsets.only(top: 30.0), // using SizedBox instead
               child: Text(
-                'You are in:',
+                'You are in: ',
                 style: TextStyle(
-                  fontSize: 35.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue[500],
                 ),
               ),
             ),
+            SizedBox(height: 10.0),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
                     child: Text(
@@ -125,9 +127,9 @@ class _WeatherAppState extends State<WeatherApp> {
 
     print(getlocation.latitude);
     print(getlocation.longitude);
-    print(getlocation.city);
+    // print(getlocation.city);
 
-    city = getlocation.city;
+    // city = getlocation.city;
 
     getTemperature(getlocation.latitude, getlocation.longitude);
   }
@@ -135,12 +137,14 @@ class _WeatherAppState extends State<WeatherApp> {
   // Get current temperature
   Future<void> getTemperature(double lat, double lon) async {
     http.Response response = await http.get(
-        'api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric');
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric');
     print(response.body);
 
     var decodedData = jsonDecode(response.body);
     description = decodedData['weather'][0]['description'];
     temperature = decodedData['main']['temp'];
+    city = decodedData['name'];
     print(temperature);
+    print(city);
   }
 }

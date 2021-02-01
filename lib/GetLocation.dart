@@ -1,10 +1,10 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
+// import 'package:geocoding/geocoding.dart';
 
 class GetLocation {
   double latitude;
   double longitude;
-  String city;
+  // String city;
 
   // Get current location
   Future<void> getCurrentLocation() async {
@@ -14,15 +14,16 @@ class GetLocation {
       latitude = position.latitude;
       longitude = position.longitude;
 
-      city = await getCityName(position.latitude, position.longitude);
+      // city = await getCityName(position.latitude, position.longitude);
     } catch (e) {
       print(e);
     }
   }
 
   // Get the city name
-  Future<String> getCityName(double lat, double lon) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
-    return placemarks[0].locality;
-  }
+  // Future<String> getCityName(double lat, double lon) async {
+  //   List<Placemark> placemark = await placemarkFromCoordinates(lat, lon);
+  //   print('city name is: ${placemark[0].locality}');
+  //   return placemark[0].locality;
+  // }
 }
