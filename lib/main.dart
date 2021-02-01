@@ -52,11 +52,14 @@ class _WeatherAppState extends State<WeatherApp> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: Text(city.toString(),
-                        style: TextStyle(
-                          fontSize: 35.0,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child: Text(
+                      city.toString(),
+                      style: TextStyle(
+                        fontSize: 35.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[500],
+                      ),
+                    ),
                   ),
                   SizedBox(width: 10.0),
                   Container(
@@ -66,32 +69,35 @@ class _WeatherAppState extends State<WeatherApp> {
                       size: 40.0,
                     ),
                   ),
-                  Card(
-                    margin: EdgeInsets.symmetric(vertical: 17.0, horizontal: 25.0),
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.wb_sunny,
-                        color: Colors.amber,
-                      ),
-                      title: Text('Temperature: ${temperature.toString()} ºC'),
-                      subtitle: Text(description.toString()),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: FlatButton(
-                          child: Text('Get weather info'),
-                          color: Colors.blue[500],
-                          textColor: Colors.white,
-                          onPressed: () {
-                            setState(() {
-                              getLocation();
-                            });
-                          }),
-                    ),
-                  ),
                 ],
+              ),
+            ),
+            Card(
+              margin: EdgeInsets.symmetric(vertical: 17.0, horizontal: 25.0),
+              color: Colors.white,
+              child: ListTile(
+                leading: Icon(
+                  Icons.wb_sunny,
+                  color: Colors.amber,
+                ),
+                title: Text(
+                  'Temperature: ${temperature.toString()} ºC',
+                ),
+                subtitle: Text(description.toString()),
+              ),
+            ),
+            Container(
+              child: Center(
+                child: FlatButton(
+                  child: Text('Get weather info'),
+                  color: Colors.blue[500],
+                  textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      getLocation();
+                    });
+                  },
+                ),
               ),
             ),
           ],
@@ -117,6 +123,10 @@ class _WeatherAppState extends State<WeatherApp> {
     GetLocation getlocation = GetLocation();
     await getlocation.getCurrentLocation();
 
+    print(getlocation.latitude);
+    print(getlocation.longitude);
+    print(getlocation.city);
+
     city = getlocation.city;
 
     getTemperature(getlocation.latitude, getlocation.longitude);
@@ -126,9 +136,11 @@ class _WeatherAppState extends State<WeatherApp> {
   Future<void> getTemperature(double lat, double lon) async {
     http.Response response = await http.get(
         'api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric');
+    print(response.body);
 
     var decodedData = jsonDecode(response.body);
     description = decodedData['weather'][0]['description'];
-    temperature = decodedData['weather']['temp'];
+    temperature = decodedData['main']['temp'];
+    print(temperature);
   }
 }
