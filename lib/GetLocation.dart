@@ -23,7 +23,6 @@ class GetLocation {
   // Get the city name
   Future<String> getCityName(double lat, double lon) async {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
-    print('city name is: ${placemarks[0].locality}');
     return placemarks[0].locality;
   }
 }

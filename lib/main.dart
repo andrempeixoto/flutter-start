@@ -16,6 +16,7 @@ class _WeatherAppState extends State<WeatherApp> {
   String apiKey = '89620f59dd863a99889ef3edab81b38d';
   var description;
   var temperature;
+  var city;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _WeatherAppState extends State<WeatherApp> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: Text('Pres. Prudente',
+                    child: Text(city.toString(),
                         style: TextStyle(
                           fontSize: 35.0,
                           fontWeight: FontWeight.bold,
@@ -111,9 +112,12 @@ class _WeatherAppState extends State<WeatherApp> {
     }
   }
 
+  // Get location
   void getLocation() async {
     GetLocation getlocation = GetLocation();
     await getlocation.getCurrentLocation();
+
+    city = getlocation.city;
 
     getTemperature(getlocation.latitude, getlocation.longitude);
   }
