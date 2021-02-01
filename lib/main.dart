@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'GetLocation.dart';
 
 void main() => runApp(WeatherApp());
@@ -10,6 +13,8 @@ class WeatherApp extends StatefulWidget {
 }
 
 class _WeatherAppState extends State<WeatherApp> {
+  String apiKey = '89620f59dd863a99889ef3edab81b38d';
+
   @override
   Widget build(BuildContext context) {
     getLocation();
@@ -93,5 +98,17 @@ class _WeatherAppState extends State<WeatherApp> {
   void getLocation() async {
     GetLocation getlocation = GetLocation();
     await getlocation.getCurrentLocation();
+
+    getTemperature(getlocation.latitude, getlocation.longitude);
+  }
+
+  // Get current temperature
+  Future<void> getTemperature(double lat, double lon) async {
+    http.Response response =
+        await http.get('api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey');
+
+    var decodedData = jsonDecode(response.body);
+    var description = decodedData['weather'][0]['description'];
+    var temperature = decodedData['weather']['temp'];
   }
 }
