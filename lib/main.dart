@@ -14,6 +14,8 @@ class WeatherApp extends StatefulWidget {
 
 class _WeatherAppState extends State<WeatherApp> {
   String apiKey = '89620f59dd863a99889ef3edab81b38d';
+  var description;
+  var temperature;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,21 @@ class _WeatherAppState extends State<WeatherApp> {
                         Icons.wb_sunny,
                         color: Colors.amber,
                       ),
-                      title: Text('Temp: 27 ºC'),
+                      title: Text('Temperature: ${temperature.toString()} ºC'),
+                      subtitle: Text(description.toString()),
+                    ),
+                  ),
+                  Container(
+                    child: Center(
+                      child: FlatButton(
+                          child: Text('Get weather info'),
+                          color: Colors.blue[500],
+                          textColor: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              getLocation();
+                            });
+                          }),
                     ),
                   ),
                 ],
@@ -104,11 +120,11 @@ class _WeatherAppState extends State<WeatherApp> {
 
   // Get current temperature
   Future<void> getTemperature(double lat, double lon) async {
-    http.Response response =
-        await http.get('api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey');
+    http.Response response = await http.get(
+        'api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric');
 
     var decodedData = jsonDecode(response.body);
-    var description = decodedData['weather'][0]['description'];
-    var temperature = decodedData['weather']['temp'];
+    description = decodedData['weather'][0]['description'];
+    temperature = decodedData['weather']['temp'];
   }
 }
