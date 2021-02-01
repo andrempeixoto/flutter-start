@@ -57,7 +57,7 @@ class _WeatherAppState extends State<WeatherApp> {
                     child: Text(
                       city.toString(),
                       style: TextStyle(
-                        fontSize: 35.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue[500],
                       ),
@@ -79,8 +79,8 @@ class _WeatherAppState extends State<WeatherApp> {
               color: Colors.white,
               child: ListTile(
                 leading: Icon(
-                  Icons.wb_sunny,
-                  color: Colors.amber,
+                  Icons.device_thermostat,
+                  color: setTempIconColor(temperature),
                 ),
                 title: Text(
                   'Temperature: ${temperature.toString()} ºC',
@@ -146,5 +146,20 @@ class _WeatherAppState extends State<WeatherApp> {
     city = decodedData['name'];
     print(temperature);
     print(city);
+  }
+
+  // Set thermostat icon color
+  setTempIconColor(temperature) {
+    if (temperature >= 30) {
+      return Colors.red;
+    } else if (temperature <= 29 && temperature >= 20) {
+      return Colors.amber;
+    } else if (temperature <= 19 && temperature >= 10) {
+      return Colors.green;
+    } else if (temperature <= 9 && temperature > 0) {
+      return Colors.blue;
+    } else if (temperature <= 0) {
+      return Colors.blue[200];
+    }
   }
 }
