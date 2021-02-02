@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'GetLocation.dart';
+import './utils/globals.dart' as globals;
 
 void main() => runApp(WeatherApp());
 
@@ -13,7 +14,7 @@ class WeatherApp extends StatefulWidget {
 }
 
 class _WeatherAppState extends State<WeatherApp> {
-  String apiKey = '89620f59dd863a99889ef3edab81b38d';
+  String apiKey = globals.apiKey;
   var description;
   var temperature;
   var city;
