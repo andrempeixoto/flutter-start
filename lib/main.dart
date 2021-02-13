@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'GetLocation.dart';
+import './GetLocation.dart';
 import './utils/globals.dart' as globals;
 
 void main() => runApp(WeatherApp());
@@ -21,7 +21,7 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-    // getLocation();
+    getLocation();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -44,11 +44,11 @@ class _WeatherAppState extends State<WeatherApp> {
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue[500],
+                  color: Colors.blue[800],
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 5.0),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
@@ -58,18 +58,18 @@ class _WeatherAppState extends State<WeatherApp> {
                     child: Text(
                       city.toString(),
                       style: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue[500],
+                        color: Colors.blue[800],
                       ),
                     ),
                   ),
-                  SizedBox(width: 10.0),
+                  // SizedBox(width: 5.0),
                   Container(
                     child: Icon(
                       Icons.location_on,
                       color: Colors.red,
-                      size: 40.0,
+                      size: 30.0,
                     ),
                   ),
                 ],
@@ -79,21 +79,21 @@ class _WeatherAppState extends State<WeatherApp> {
               margin: EdgeInsets.symmetric(vertical: 17.0, horizontal: 25.0),
               color: Colors.white,
               child: ListTile(
-                leading: Icon(
-                  Icons.device_thermostat,
-                  color: setTempIconColor(temperature),
-                ),
+                leading: Icon(Icons.device_thermostat,
+                    // color: setTempIconColor(temperature),
+                    color: Colors.orange[900]),
                 title: Text(
                   'Temperature: ${temperature.toString()} ºC',
                 ),
-                subtitle: Text(description.toString()),
+                subtitle: Text(toBeginningOfSentenceCase(description.toString())),
+                // subtitle: Text(description.toString())
               ),
             ),
             Container(
               child: Center(
                 child: FlatButton(
-                  child: Text('Get weather info'),
-                  color: Colors.blue[500],
+                  child: Text('UPDATE WEATHER INFO'),
+                  color: Colors.blue[800],
                   textColor: Colors.white,
                   onPressed: () {
                     setState(() {
@@ -111,12 +111,12 @@ class _WeatherAppState extends State<WeatherApp> {
 
   // Display images based on current time
   displayImage() {
-    var now = DateTime.now();
-    final currentTime = DateFormat.jm().format(now);
+    var currentHour = DateTime.now().hour;
+    print(currentHour);
 
-    if (currentTime.contains('AM')) {
+    if (currentHour <= 17) {
       return Image.asset('images/dayTime.jpg');
-    } else if (currentTime.contains('PM')) {
+    } else if (currentHour >= 18) {
       return Image.asset('images/nightTime.jpg');
     }
   }
@@ -149,17 +149,21 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   // Set thermostat icon color
-  setTempIconColor(temperature) {
-    if (temperature >= 30) {
-      return Colors.red;
-    } else if (temperature <= 29 && temperature >= 20) {
-      return Colors.amber;
-    } else if (temperature <= 19 && temperature >= 10) {
-      return Colors.green;
-    } else if (temperature <= 9 && temperature > 0) {
-      return Colors.blue;
-    } else if (temperature <= 0) {
-      return Colors.blue[200];
-    }
-  }
+  // setTempIconColor(temperature) {
+  //   if (temperature = false) {
+  //     return Colors.orange;
+  //   } else if (temperature >= 30) {
+  //     return Colors.red;
+  //   } else if (temperature <= 29 && temperature >= 20) {
+  //     return Colors.amber;
+  //   } else if (temperature <= 19 && temperature >= 10) {
+  //     return Colors.green;
+  //   } else if (temperature <= 9 && temperature > 0) {
+  //     return Colors.blue;
+  //   } else if (temperature <= 0) {
+  //     return Colors.blue[200];
+  //   } else {
+  //     return Colors.orange[900];
+  //   }
+  // }
 }
